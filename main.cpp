@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
+#include <optional>
 #include <vector>
 
 
@@ -27,6 +28,27 @@ private:
     bool isDeviceSuitable(VkPhysicalDevice device) {
         return true;
     }
+//endregion
+
+//region Queue Family
+
+    struct QueueFamilyIndices {
+        std::optional<uint32_t> graphicsFamily;
+    };
+
+    QueueFamilyIndices  findQueueFamily(VkPhysicalDevice device) {
+        QueueFamilyIndices indices;
+
+        uint32_t queueFamilyCount = 0;
+        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+        std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+        
+        return indices;
+    }
+
+
 //endregion
 
 
